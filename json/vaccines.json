@@ -1,0 +1,64 @@
+{
+    "vaccines": [
+        {
+            "trade_name": "ActHIB",
+            "vaccinates_against": [
+                {
+                    "disease_abbr": "Hib",
+                    "full_disease_name": "Haemophilus influenzae type b"
+                }
+            ]
+        },
+        {
+            "trade_name": "Adacel",
+            "vaccinates_against": [
+                {
+                    "vaccine_abbr": "Tdap",
+                    "full_disease_names": [
+                        "Tetanus",
+                        "Diptheria",
+                        "acellular Pertussis"
+                    ]
+                }
+            ],
+            "field": []
+        },
+        {
+            "trade_name": "Afluria",
+            "vaccinates_against": [
+                {
+                    "vaccine_abbr": "Flu (TIV)",
+                    "full_disease_names": [
+                        "Influenza"
+                    ]
+                }
+            ],
+            "field": []
+        },
+        {
+            "trade_name": "Boostrix",
+            "vaccinates_against": [
+                {
+                    "vaccine_abbr": "Tdap",
+                    "full_disease_names": [
+                        "Tetanus",
+                        "Diptheria",
+                        "acellular Pertussis"
+                    ]
+                }
+            ],
+            "field": []
+        },
+        {
+            "trade_name": "Cervarix",
+            "vaccinates_against": [
+                {
+                    "vaccine_abbr": "HPV2",
+                    "full_disease_names": [
+                        "Human Papillomavirus"
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.0-beta.1/jquery.mobile-1.3.0-beta.1.min.css" />
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <!--<script src="json/vaccines.json" type="text/javascript" />-->
     <script type="text/javascript">
 
         $(document).bind('pageinit', function () {
@@ -13,15 +14,32 @@
             var activeCheckup = window.localStorage.getItem("activeCheckupName");
 
 
-            //list the kid's name
-            $("#child_name_display").html(activeChild).trigger( "create" );
+            //list the kid's name and checkup
+            //TODO: Wire this one in ...  $(".whichVisitHeader").html(activeCheckup);
+
+            $(".child_name_display").html(activeChild).trigger( "create" );
         });
 
     </script>
     <script type="text/javascript" >
+
+        function populateVaccines(vaccines) {
+            var htmlOutput = "";
+            vaccines = vaccines.vaccines;
+
+            for (i=0; i<vaccines.length; i++) {
+                htmlOutput += "<option>" + vaccines[i].trade_name + "</option>";
+            }
+            alert(htmlOutput);
+            $("#vaccine_list").html(htmlOutput).trigger( "create" );
+        };
+
+
         //save the checkup data to localstorage
-        $('#add_child').live('pageinit', function(event) {
-            $('#saveCkupBtn').bind('click', function(event,ui) {
+        $('#add_shot').live('pageinit', function(event) {
+            populateVaccines(vaccines);
+
+            $('#saveVaccinebtn').bind('click', function(event,ui) {
                 /* approach
                  * get kid from URL param
                  * collect data from form
@@ -44,21 +62,22 @@
                 window.localStorage.setItem('childrenObject', JSON.stringify(childrenObject));
                 */
 
-                //after save, close dialog, refresh page (or update DOM)
-                $.mobile.changePage( "checkup_list", { transition: "none", reloadPage:"true"} );
+                //on save,  refresh page (or update DOM), close dialog.
+                $('.ui-dialog').dialog('close');
             })
         });
 
         //get the stored data on page load (for editing, have to pass in child identifier to
         //retrieve that child's data.
-        $('#add_child').live('pageshow', function(event, data) {
+        $('#add_shot').live('pageshow', function(event, data) {
             //var child_dataObj = window.localStorage.getItem('childObject');
-            $('#child_name').val(window.localStorage.getItem('child_name'));
+            //$('#child_name').val(window.localStorage.getItem('child_name'));
         });
 
 
     </script>
     <script src="http://code.jquery.com/mobile/1.3.0-beta.1/jquery.mobile-1.3.0-beta.1.min.js"></script>
+
 </head>
 <body>
 
@@ -66,38 +85,46 @@
 
 <div data-role="page" data-theme="b" id="visit" data-add-back-btn="true">
     <div data-role="header">
+        <a href="index.html" data-icon="delete">Cancel</a>
         <h1>Record a Check Up</h1>
+        <a href="#vitals" onclick="onClick(alert('saving')); return true;" data-icon="arrow-r" data-theme="b">Next</a>
     </div><!-- /header -->
 
     <div data-role="content">
-        <h2 id="child_name_display">Child's Name</h2>
-        <p>Visit Details<br/><span id="whichVisitHeader">6 YO Visit</span> </p>
+        <div class="ui-grid-a">
+
+            <div class="ui-block-a">
+                <h2 class="child_name_display">Child's Name</h2>
+            </div>
+            <div class="ui-block-b">
+                 <p><span child_name_display="whichVisitHeader">6 YO Visit</span><br/>Visit Details </p>
+            </div>
+        </div>
 
 
-        <label for="checkup_date" class="select">When was the appointment?</label>
+        <label for="checkup_date" class="select">When did you see the doctor?</label>
 
         <div class="ui-grid-a">
 
             <div class="ui-block-a">
                 <div data-role='fieldcontain'>
                     <label for="checkup_date">Date:</label>
-                    <input type="date" name="checkup_date" id="checkup_date" class="sessionstore" >
+                    <input type="date" name="checkup_date" id="checkup_date" class="sessionstore" value="12/12/2012">
                 </div>
             </div>
             <div class="ui-block-b">
                 <div data-role='fieldcontain'>
                     <label for="checkup_date">Time:</label>
-                    <input type="time" name="checkup_time" id="checkup_time" class="sessionstore">
+                    <input type="time" name="checkup_time" id="checkup_time" class="sessionstore" value="10:15AM">
                 </div>
             </div>
         </div><!-- /grid-a -->
 
+<!-- Clinic Address-->
 
-
-
-        <label class="select">Which clinic are you going to?</label>
-            <fieldset class="ui-grid-a">
-            <div data-role="fieldcontain" class="ui-block-a" data-type="horizontal">
+        <!--<label class="select">Clinic address</label>-->
+            <fieldset class="ui-grid-a" data-type="horizontal">
+            <div class="ui-block-a" >
                 <select name="clinic_name" id="clinic_name" data-mini="false"  >
                     <option value="none">-- None --</option>
                     <option value="clinic1">Partners in Pediatrics</option>
@@ -106,14 +133,26 @@
                 </select>
             </div>
             <div class="ui-block-b">
-                <a href="#add_clinic" data-role="button" data-mini="false" data-icon="plus" data-iconpos="notext" style="float:right;">New Clinic</a>
+                <a href="#add_clinic" data-role="button" data-theme="c" data-icon="plus" data-iconpos="notext" style="float:right;">New Clinic</a>
             </div>
             </fieldset>
 
 
+        <fieldset class="ui-grid-a" data-type="horizontal">
+            <div class="ui-block-a" >
+                18500 NE 185th St <br/>
+                Shoreline, WA 98155 <br/>
+                <a href="tel:206-555-1212">206.555.1212</a>
+            </div>
+            <div class="ui-block-b">
+                (<a href="" target="_blank">Map It</a>)
+            </div>
+        </fieldset>
+
+<br/>
         <label for="md_name" class="select">Who did you see today?</label>
         <fieldset class="ui-grid-a">
-            <div data-role="fieldcontain" class="ui-block-a">
+            <div class="ui-block-a">
 
             <select name="md_name" id="md_name" data-mini="false" data-inline="true" >
                 <option value="none">-- None --</option>
@@ -124,15 +163,20 @@
             </div>
 
             <div class="ui-block-b">
-            <a href="#add_clinic" data-role="button"  data-mini="true" data-inline="true" data-icon="plus" data-iconpos="notext" style="float:right;">New Doctor...</a><br clear="all"/>
+            <a href="#add_md" data-role="button"  data-theme="c" data-icon="plus" data-iconpos="notext" style="float:right;">New Doctor...</a><br clear="all"/>
             </div>
         </fieldset>
 
    </div>
 
 
-
-        <a id="saveCkupBtn" data-role="button" data-mini="false" data-inline="true">Save</a>
+    <!--<div class="ui-grid-a">-->
+        <!--<div class="ui-block-a">-->
+            <!--<a data-role="button" data-mini="false" data-inline="true">Cancel</a>-->
+        <!--</div>-->
+        <!--<div class="ui-block-b">-->
+            <!--<a id="saveRecordVisitBtn" data-role="button" data-mini="false" data-inline="true">Save</a>-->
+        <!--</div>-->
 
 
     </div><!-- /content -->
@@ -141,88 +185,82 @@
 </div> <!-- /page -->
 
 
+<!--VITALS PAGE-->
 
+<div data-role="page" data-theme="b" id="vitals" data-add-back-btn="true">
 
-<div data-role="page" data-theme="b" id="visit" data-add-back-btn="true">
     <div data-role="header">
-        <h1>Schedule a Check Up</h1>
+        <a href="index.html" data-rel="back" data-icon="arrow-l">Back</a>
+        <h1>Record a Check Up</h1>
+        <a href="#questions" onclick="alert('saving'); return true;" data-icon="arrow-r" data-theme="b">Next</a>
     </div><!-- /header -->
 
     <div data-role="content">
-        <h2>Declan</h2>
-        <!--TODO: Update header -->
+        <div class="ui-grid-a">
 
-        <label class="select">Which clinic are you going to?</label>
-        <fieldset class="ui-grid-a">
-            <div data-role="fieldcontain" class="ui-block-a" data-type="horizontal">
-                <select name="clinic_name" id="clinic_name" data-mini="false"  >
-                    <option value="none">-- None --</option>
-                    <option value="clinic1">Partners in Pediatrics</option>
-                    <option value="clinic2" selected="true">Shoreline Pediatrics</option>
-                    <option value="clinic3">UW Medicine</option>
-                </select>
+            <div class="ui-block-a">
+                <h2 class="child_name_display">Child's Name</h2>
             </div>
             <div class="ui-block-b">
-                <a href="#add_clinic" data-role="button" data-mini="false" data-icon="plus" data-iconpos="notext" style="float:right;">New Clinic</a>
+                <p><span class="whichVisitHeader">6 YO Visit</span><br/>Vitals </p>
             </div>
-        </fieldset>
+        </div>
 
 
-        <label for="md_name" class="select">Who are you seeing?</label>
-        <fieldset class="ui-grid-a">
-            <div data-role="fieldcontain" class="ui-block-a">
-
-                <select name="md_name" id="md_name" data-mini="false" data-inline="true" >
-                    <option value="none">-- None --</option>
-                    <option value="dr1">Dr Prina</option>
-                    <option value="dr2" selected="true">Dr. Dean</option>
-                    <option value="dr3">Dr. Who</option>
-                </select>
+            <div data-role='fieldcontain'>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <label for="height">Height (inches or cm)</label>
+                    </div>
+                    <div class="ui-block-b">
+                        <input type="number" pattern="[0-9]*" name="height" id="height" class="sessionstore" >
+                    </div>
+                </div>
             </div>
 
-            <div class="ui-block-b">
-                <a href="#add_clinic" data-role="button"  data-mini="true" data-inline="true" data-icon="plus" data-iconpos="notext" style="float:right;">New Doctor...</a><br clear="all"/>
+        <div data-role='fieldcontain'>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <label for="weight">Weight (pounds or kg)</label>
+                </div>
+                <div class="ui-block-b">
+                    <input type="number" pattern="[0-9]*" name="weight" id="weight" class="sessionstore" >
+                </div>
             </div>
-        </fieldset>
+        </div>
 
 
-        <label for="insurance_name" class="select">Has your insurance changed?</label>
 
-        <fieldset class="ui-grid-a">
-
-            <div data-role="fieldcontain" class="ui-block-a">
-
-                <select name="insurance_name" id="insurance_name" data-mini="false" data-inline="true">
-                    <option value="none">-- None --</option>
-                    <option value="insurance2" selected="selected">Blue Cross</option>
-                </select>
+        <div data-role='fieldcontain'>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <label for="sbp">Blood Pressure (mmHg)</label>
+                </div>
+                <div class="ui-block-b">
+                    <input type="number" pattern="[0-9]*" name="sbp" id="sbp" class="sessionstore" placeholder="120">
+                    <input type="number" pattern="[0-9]*" name="dbp" id="dbp" class="sessionstore" placeholder="80">
             </div>
-            <div class="ui-block-b">
-                <a href="#add_clinic" data-role="button" data-mini="true" data-inline="true" data-icon="plus" data-iconpos="notext" style="float:right;">New Insurance...</a><br clear="all"/>
-            </div>
-        </fieldset>
+        </div>
     </div>
 
 
-    <label for="checkup_date" class="select">When is the appointment?</label>
-
-    <div class="ui-grid-a">
-
-        <div class="ui-block-a">
-            <div data-role='fieldcontain'>
-                <label for="checkup_date">Date:</label>
-                <input type="date" name="checkup_date" id="checkup_date" class="sessionstore" >
+        <div data-role='fieldcontain'>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <label for="lefteye">Vision</label>
+                </div>
+                <div class="ui-block-b">
+                    <input type="number" pattern="[0-9]*" name="lefteye" id="lefteye" class="sessionstore" placeholder="20">
+                    <input type="number" pattern="[0-9]*" name="righteye" id="righteye" class="sessionstore" placeholder="20">
+                </div>
             </div>
         </div>
-        <div class="ui-block-b">
-            <div data-role='fieldcontain'>
-                <label for="checkup_date">Time:</label>
-                <input type="time" name="checkup_time" id="checkup_time" class="sessionstore">
-            </div>
-        </div>
-    </div><!-- /grid-a -->
 
-    <a id="saveCkupBtn" data-role="button" data-mini="false" data-inline="true">Save</a>
+
+        <div data-role='fieldcontain'>
+            <label for="notes" >Notes</label>
+            <textarea name="notes" id="notes" class="sessionstore" data-clear-btn="true"  ></textarea>
+        </div>
 
 
 </div><!-- /content -->
@@ -231,185 +269,185 @@
 </div> <!-- /page -->
 
 
+<!--Questions PAGE-->
+
+<div data-role="page" data-theme="b" id="questions" data-add-back-btn="true">
 
 
-<div data-role="page" data-theme="b" id="visit" data-add-back-btn="true">
     <div data-role="header">
-        <h1>Schedule a Check Up</h1>
+        <a href="index.html" data-rel="back" data-icon="arrow-l">Back</a>
+        <h1>Record a Check Up</h1>
+        <a href="#shots" onclick="alert('saving'); return true;" data-icon="arrow-r" data-theme="b">Next</a>
     </div><!-- /header -->
 
     <div data-role="content">
-        <h2>Declan</h2>
-        <!--TODO: Update header -->
 
-        <label class="select">Which clinic are you going to?</label>
-        <fieldset class="ui-grid-a">
-            <div data-role="fieldcontain" class="ui-block-a" data-type="horizontal">
-                <select name="clinic_name" id="clinic_name" data-mini="false"  >
-                    <option value="none">-- None --</option>
-                    <option value="clinic1">Partners in Pediatrics</option>
-                    <option value="clinic2" selected="true">Shoreline Pediatrics</option>
-                    <option value="clinic3">UW Medicine</option>
-                </select>
+        <div class="ui-grid-a">
+
+            <div class="ui-block-a">
+                <h2 class="child_name_display">Child's Name</h2>
             </div>
             <div class="ui-block-b">
-                <a href="#add_clinic" data-role="button" data-mini="false" data-icon="plus" data-iconpos="notext" style="float:right;">New Clinic</a>
-            </div>
-        </fieldset>
-
-
-        <label for="md_name" class="select">Who are you seeing?</label>
-        <fieldset class="ui-grid-a">
-            <div data-role="fieldcontain" class="ui-block-a">
-
-                <select name="md_name" id="md_name" data-mini="false" data-inline="true" >
-                    <option value="none">-- None --</option>
-                    <option value="dr1">Dr Prina</option>
-                    <option value="dr2" selected="true">Dr. Dean</option>
-                    <option value="dr3">Dr. Who</option>
-                </select>
-            </div>
-
-            <div class="ui-block-b">
-                <a href="#add_clinic" data-role="button"  data-mini="true" data-inline="true" data-icon="plus" data-iconpos="notext" style="float:right;">New Doctor...</a><br clear="all"/>
-            </div>
-        </fieldset>
-
-
-        <label for="insurance_name" class="select">Has your insurance changed?</label>
-
-        <fieldset class="ui-grid-a">
-
-            <div data-role="fieldcontain" class="ui-block-a">
-
-                <select name="insurance_name" id="insurance_name" data-mini="false" data-inline="true">
-                    <option value="none">-- None --</option>
-                    <option value="insurance2" selected="selected">Blue Cross</option>
-                </select>
-            </div>
-            <div class="ui-block-b">
-                <a href="#add_clinic" data-role="button" data-mini="true" data-inline="true" data-icon="plus" data-iconpos="notext" style="float:right;">New Insurance...</a><br clear="all"/>
-            </div>
-        </fieldset>
-    </div>
-
-
-    <label for="checkup_date" class="select">When is the appointment?</label>
-
-    <div class="ui-grid-a">
-
-        <div class="ui-block-a">
-            <div data-role='fieldcontain'>
-                <label for="checkup_date">Date:</label>
-                <input type="date" name="checkup_date" id="checkup_date" class="sessionstore" >
+                <p><span class="whichVisitHeader">6 YO Visit</span><br/>Questions </p>
             </div>
         </div>
-        <div class="ui-block-b">
-            <div data-role='fieldcontain'>
-                <label for="checkup_date">Time:</label>
-                <input type="time" name="checkup_time" id="checkup_time" class="sessionstore">
-            </div>
+
+
+        <p>Make a list of questions you want to ask the doctor. <br/>
+        Add your questions here and take notes when you can.</p>
+
+        <div data-role='fieldcontain'>
+            <label for="questions_notes" >Your Questions</label>
+            <textarea name="questions_notes" id="questions_notes" class="sessionstore" >Is my child up-to-date on shots? How can I make sure my child is getting enough physical activity? Is my child at a healthy weight?</textarea>
         </div>
-    </div><!-- /grid-a -->
-
-    <a id="saveCkupBtn" data-role="button" data-mini="false" data-inline="true">Save</a>
-
-
-</div><!-- /content -->
-
-
+    </div><!-- /content -->
 </div> <!-- /page -->
 
 
+<!--SHOTS PAGE-->
+
+<div data-role="page" data-theme="b" id="shots" data-add-back-btn="true">
 
 
-<div data-role="page" data-theme="b" id="visit" data-add-back-btn="true">
     <div data-role="header">
-        <h1>Schedule a Check Up</h1>
+        <a href="index.html" data-rel="back" data-icon="arrow-l">Back</a>
+        <h1>Record a Check Up</h1>
+        <a href="#vitals" onclick="alert('saving'); return true;" data-icon="arrow-r" data-theme="b">Done</a>
     </div><!-- /header -->
 
     <div data-role="content">
-        <h2>Declan</h2>
-        <!--TODO: Update header -->
 
-        <label class="select">Which clinic are you going to?</label>
-        <fieldset class="ui-grid-a">
-            <div data-role="fieldcontain" class="ui-block-a" data-type="horizontal">
-                <select name="clinic_name" id="clinic_name" data-mini="false"  >
-                    <option value="none">-- None --</option>
-                    <option value="clinic1">Partners in Pediatrics</option>
-                    <option value="clinic2" selected="true">Shoreline Pediatrics</option>
-                    <option value="clinic3">UW Medicine</option>
-                </select>
+        <div class="ui-grid-a">
+
+            <div class="ui-block-a">
+                <h2 class="child_name_display">Child's Name</h2>
             </div>
             <div class="ui-block-b">
-                <a href="#add_clinic" data-role="button" data-mini="false" data-icon="plus" data-iconpos="notext" style="float:right;">New Clinic</a>
-            </div>
-        </fieldset>
-
-
-        <label for="md_name" class="select">Who are you seeing?</label>
-        <fieldset class="ui-grid-a">
-            <div data-role="fieldcontain" class="ui-block-a">
-
-                <select name="md_name" id="md_name" data-mini="false" data-inline="true" >
-                    <option value="none">-- None --</option>
-                    <option value="dr1">Dr Prina</option>
-                    <option value="dr2" selected="true">Dr. Dean</option>
-                    <option value="dr3">Dr. Who</option>
-                </select>
-            </div>
-
-            <div class="ui-block-b">
-                <a href="#add_clinic" data-role="button"  data-mini="true" data-inline="true" data-icon="plus" data-iconpos="notext" style="float:right;">New Doctor...</a><br clear="all"/>
-            </div>
-        </fieldset>
-
-
-        <label for="insurance_name" class="select">Has your insurance changed?</label>
-
-        <fieldset class="ui-grid-a">
-
-            <div data-role="fieldcontain" class="ui-block-a">
-
-                <select name="insurance_name" id="insurance_name" data-mini="false" data-inline="true">
-                    <option value="none">-- None --</option>
-                    <option value="insurance2" selected="selected">Blue Cross</option>
-                </select>
-            </div>
-            <div class="ui-block-b">
-                <a href="#add_clinic" data-role="button" data-mini="true" data-inline="true" data-icon="plus" data-iconpos="notext" style="float:right;">New Insurance...</a><br clear="all"/>
-            </div>
-        </fieldset>
-    </div>
-
-
-    <label for="checkup_date" class="select">When is the appointment?</label>
-
-    <div class="ui-grid-a">
-
-        <div class="ui-block-a">
-            <div data-role='fieldcontain'>
-                <label for="checkup_date">Date:</label>
-                <input type="date" name="checkup_date" id="checkup_date" class="sessionstore" >
+                <p><span class="whichVisitHeader">6 YO Visit</span><br/>Shots </p>
             </div>
         </div>
-        <div class="ui-block-b">
-            <div data-role='fieldcontain'>
-                <label for="checkup_date">Time:</label>
-                <input type="time" name="checkup_time" id="checkup_time" class="sessionstore">
-            </div>
+
+
+        <p>Record your child's shots ("vaccinations") here. You will need this information at the start of each school year too. </p>
+        <p>You can find a vaccination record for each child from the "More" menu, below.</p>
+
+        <div data-role="container">
+            <a href="#add_shot" data-role="button" data-rel="dialog" data-icon="star" data-inline="true">Record a Shot</a>
         </div>
-    </div><!-- /grid-a -->
 
-    <a id="saveCkupBtn" data-role="button" data-mini="false" data-inline="true">Save</a>
+        <!--TODO: Move this to "prepare" section. Needs own page, logic around age ranges.-->
+        <p>What shots does my child need? Download the information now from the Centers for Disease Control.</p>
+
+        <ul>
+            <li><a href="http://www.cdc.gov/vaccines/parents/downloads/parent-ver-sch-0-6yrs.pdf" target="_blank">
+                2012 Recommended Immunizations for Children from Birth through 6 Years Old (PDF)</a></li>
+            <li><a href="http://www.cdc.gov/vaccines/who/teens/downloads/parent-version-schedule-7-18yrs.pdf" target="_blank">
+                2012 Recommended Immunizations for Children from 7 Through 18 Years Old (PDF)</a></li>
+
+                <!--2012 Vacunas recomendadas para niños, desde el nacimiento hasa los 6 años de edad (PDF)-->
+                <!--2012 Vacunas recomendadas para los niños de los 7 años hasta los 18 años de edad (PDF)-->
+        </ul>
 
 
-</div><!-- /content -->
-
-
+    </div><!-- /content -->
 </div> <!-- /page -->
 
 
+<!--ADD SHOT DIALOG-->
+
+<div data-role="page" data-theme="b" id="add_shot" >
+    <div data-role="header">
+        <h1>Record a Shot</h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+    <div data-role="fieldcontain">
+        <label for="vaccine_list" class="select">Vaccine</label>
+        <select name="vaccine_list" id="vaccine_list" data-mini="false" data-inline="true">
+            <option value="none">-- None --</option>
+        </select>
+    </div>
+
+    <div data-role="fieldcontain">
+        <label for="dose_list" class="select">Dose (if applicable)</label>
+        <select name="dose_list" id="dose_list" data-mini="false" data-inline="true">
+            <option value="none">-- None --</option>
+            <option value="dose1">-- Dose 1 --</option>
+            <option value="dose2">-- Dose 2 --</option>
+            <option value="dose3">-- Dose 3 --</option>
+            <option value="dose4">-- Dose 4 --</option>
+        </select>
+    </div>
+
+        <a id="saveVaccinebtn" data-role="button" data-mini="false" data-inline="true">Save</a>
+    </div><!-- /content -->
+</div> <!-- /page -->
+
+<script type="text/javascript">
+    var vaccines = {
+        "vaccines": [
+            {
+                "trade_name": "ActHIB",
+                "vaccinates_against": [
+                    {
+                        "disease_abbr": "Hib",
+                        "full_disease_name": "Haemophilus influenzae type b"
+                    }
+                ]
+            },
+            {
+                "trade_name": "Adacel",
+                "vaccinates_against": [
+                    {
+                        "vaccine_abbr": "Tdap",
+                        "full_disease_names": [
+                            "Tetanus",
+                            "Diptheria",
+                            "acellular Pertussis"
+                        ]
+                    }
+                ],
+                "field": []
+            },
+            {
+                "trade_name": "Afluria",
+                "vaccinates_against": [
+                    {
+                        "vaccine_abbr": "Flu (TIV)",
+                        "full_disease_names": [
+                            "Influenza"
+                        ]
+                    }
+                ],
+                "field": []
+            },
+            {
+                "trade_name": "Boostrix",
+                "vaccinates_against": [
+                    {
+                        "vaccine_abbr": "Tdap",
+                        "full_disease_names": [
+                            "Tetanus",
+                            "Diptheria",
+                            "acellular Pertussis"
+                        ]
+                    }
+                ],
+                "field": []
+            },
+            {
+                "trade_name": "Cervarix",
+                "vaccinates_against": [
+                    {
+                        "vaccine_abbr": "HPV2",
+                        "full_disease_names": [
+                            "Human Papillomavirus"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+</script>
 </body>
 </html>
