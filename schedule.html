@@ -113,29 +113,72 @@
     </div><!-- /header -->
 
     <div data-role="content">
+        <h2>Declan</h2>
+         <!--TODO: Update header -->
+
+        <label class="select">Which clinic are you going to?</label>
+            <fieldset class="ui-grid-a">
+            <div data-role="fieldcontain" class="ui-block-a" data-type="horizontal">
+                <select name="clinic_name" id="clinic_name" data-mini="false"  >
+                    <option value="none">-- None --</option>
+                    <option value="clinic1">Partners in Pediatrics</option>
+                    <option value="clinic2" selected="true">Shoreline Pediatrics</option>
+                    <option value="clinic3">UW Medicine</option>
+                </select>
+            </div>
+            <div class="ui-block-b">
+                <a href="#add_clinic" data-role="button" data-mini="false" data-icon="plus" data-iconpos="notext" style="float:right;">New Clinic</a>
+            </div>
+            </fieldset>
 
 
-        <div data-role="fieldcontain">
-            <label for="clinic_name" class="select">Clinic:</label>
-            <select name="clinic_name" id="clinic_name" data-mini="false" data-inline="true">
+        <label for="md_name" class="select">Who are you seeing?</label>
+        <fieldset class="ui-grid-a">
+            <div data-role="fieldcontain" class="ui-block-a">
+
+            <select name="md_name" id="md_name" data-mini="false" data-inline="true" >
                 <option value="none">-- None --</option>
-                <option value="dr1">Partners in Pediatrics</option>
-                <option value="dr2" selected="true">Shoreline Pediatrics</option>
-                <option value="dr3">UW Medicine</option>
+                <option value="dr1">Dr Prina</option>
+                <option value="dr2" selected="true">Dr. Dean</option>
+                <option value="dr3">Dr. Who</option>
             </select>
-            <a href="#add_clinic" data-mini="true" data-inline="true" style="float:right;">New Clinic...</a><br clear="all"/>
+            </div>
 
-        </div>
-        <div class="ui-grid-a">
+            <div class="ui-block-b">
+            <a href="#add_clinic" data-role="button"  data-mini="true" data-inline="true" data-icon="plus" data-iconpos="notext" style="float:right;">New Doctor...</a><br clear="all"/>
+            </div>
+        </fieldset>
+
+
+        <label for="insurance_name" class="select">Has your insurance changed?</label>
+
+        <fieldset class="ui-grid-a">
+
+            <div data-role="fieldcontain" class="ui-block-a">
+
+            <select name="insurance_name" id="insurance_name" data-mini="false" data-inline="true">
+                <option value="none">-- None --</option>
+                <option value="insurance2" selected="selected">Blue Cross</option>
+            </select>
+            </div>
+            <div class="ui-block-b">
+                <a href="#add_clinic" data-role="button" data-mini="true" data-inline="true" data-icon="plus" data-iconpos="notext" style="float:right;">New Insurance...</a><br clear="all"/>
+            </div>
+    </div>
+
+    <label for="checkup_date" class="select">When is the appointment?</label>
+
+    <div class="ui-grid-a">
+
             <div class="ui-block-a">
                 <div data-role='fieldcontain'>
-                    <label for="checkup_date">Appointment Date:</label>
+                    <label for="checkup_date">Date:</label>
                     <input type="date" name="checkup_date" id="checkup_date" class="sessionstore" >
                 </div>
             </div>
             <div class="ui-block-b">
                 <div data-role='fieldcontain'>
-                    <label for="checkup_date">Appointment Time:</label>
+                    <label for="checkup_date">Time:</label>
                     <input type="time" name="checkup_time" id="checkup_time" class="sessionstore">
                 </div>
             </div>
