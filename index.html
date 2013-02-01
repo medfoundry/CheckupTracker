@@ -28,23 +28,30 @@
                 "children": [
                     {
                         "child": {
-                            "child_name": "Declan",
-                            "child_dob": "12/05/2006",
-                            "physician": "Dr Prina"
+                            "child_name": "Mark",
+                            "child_dob": "2000-01-01",
+                            "physician": "Dr Bauer"
                         }
                     },
                     {
                         "child": {
-                            "child_name": "Marin",
-                            "child_dob": "12/05/2001",
-                            "physician": "Dr Dean"
+                            "child_name": "Mark",
+                            "child_dob": "2000-01-01",
+                            "physician": "Dr Bauer"
+                        }
+                    },
+                    {
+                        "child": {
+                            "child_name": "Katy",
+                            "child_dob": "2006-01-01",
+                            "physician": "Dr Bauer"
                         }
                     }
                 ]
             };
         } // endIf
 
-        $(document).bind('pageinit', function () {
+        $(document).live('pageinit', function () {
             //build the list of children from localStore; re-initialize the page
             var output = "";
             output += '<ul data-role="listview" data-inset="true" data-split-icon="gear" rel="external" data-split-theme="d" data-mini="true">';
@@ -76,19 +83,13 @@
 
                 //push new child to DOM, enhance listview
                 listChildren();
-
-               /* $('main').page();
-                var $page =$('main');
-                $content = $page.children( ":jqmData(role=content)" );
-                $content.find( ":jqmData(role=listview)" ).listview();
-                */
                 $('.ui-dialog').dialog('close');
              })
 
         });
         $('#main').live('pageinit', function(event) {
             $('.child').bind('click',function(event,ui) {
-                alert ('clicked the child link ');
+                $.mobile.changePage($('#index', {changeHash:true,reloadPage:true}));
             })
         });
 
@@ -114,7 +115,7 @@
     </div><!-- /header -->
 
     <div data-role="content">
-        <h3>Like a GPS for Checkups</h3>
+        <h3>Like a GPS for Well-Child Checkups</h3>
         <h4 style="color:#666">Use Checkup Tracker to manage your child's checkups from birth through teen-age years.</h4>
         <div id="children_here">Children Here</div>
 
