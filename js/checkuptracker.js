@@ -1,13 +1,11 @@
-/* javascript for CheckupTracker. (c) Mark Sullivan 2013 */
-
-
-
 function setActiveCheckup(checkupName,destURL) {
     //alert ('setting active checkup');
     activeCheckup = checkupName;
     window.localStorage.setItem("activeCheckupName", activeCheckup);
     //continue to destination URL
-    $.mobile.changePage(destURL);
+    $.mobile.changePage(destURL, {changeHash:true,reloadPage:false});
+
+
 }
 
 function setActiveChild(child,destURL) {
@@ -42,6 +40,6 @@ function populateVaccines(vaccines) {
         htmlOutput += "<option>" + vaccines[i].trade_name + "</option>";
     }
     $("#vaccine_list").html(htmlOutput).trigger( "create" );
-};
+}
 
 
