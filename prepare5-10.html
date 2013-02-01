@@ -34,13 +34,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
-<body>
+<body id="page_body">
 
 <div data-role="page" data-theme="b" data-add-back-btn="true" id="prep">
 
     <script type="text/javascript">
-        $('#prep').bind('pagebeforeshow', function () {
-            alert('in pagebeforeshow in prep page ');
+        $('#prep').bind('pagebeforecreate', function () {
+
+            var activeChild = window.localStorage.getItem("activeChildName");
+            //list the kid's name
+            $("#child_name_display2").html(activeChild).trigger('create');
+
 
             $.getJSON("http://healthfinder.gov/Developer/Search.json?api_key=ynyawyrexvuoabvk&TopicID=91", function(json) {
                 var results = json["Result"];
@@ -49,7 +53,7 @@
 
                 var htmlString ="<h3>" + topics.Title + "</h3>";
                 var page = ""; //lets write out dynamic content pages as we loop through
-                htmlString += '<ul data-role="listview" data-theme="d" data-divider-theme="d" data-inset="true" >';
+                htmlString += '<ul data-role="listview" data-theme="d" data-divider-theme="d" data-inset="true" id="reading_listview" >';
                 for (i=0; i<sections.length;i++) {
 
                     //summary page
@@ -80,14 +84,12 @@
                     //  $("<div>").attr("data-role", "content").append($("<p>").html("Contents for page " + i )).appendTo(page);
                     //$content.html( "some Content here" );
 
-
-
                 };
                 htmlString += "</ul>";
-                //write all to to DOM
-                $("#page_body").append(page);
 
                 $("#replaceMe").html(htmlString).trigger( "create" ); //trigger("create") causes jqm to refresh widgets.
+                //write all to DOM
+                $("#page_body").append(page);
             });
         });
     </script>
@@ -97,7 +99,7 @@
     </div><!-- /header -->
 
     <div data-role="content">
-        <h2 id="child_name_display">Child's Name</h2>
+        <h2 id="child_name_display2">Child's Name</h2>
 
         <div id="replaceMe"></div>
     </div><!-- /content -->
@@ -105,22 +107,23 @@
 
 </div><!-- /page -->
 
-<div data-role="page" data-theme="b" data-add-back-btn="true" id="pageTemplate">
 
-    <div data-role="header">
-        <h1>CheckupTracker</h1>
-    </div><!-- /header -->
+<!--<div data-role="page" data-theme="b" data-add-back-btn="true" id="pageTemplate">-->
 
-    <div data-role="content">
-        <h3>Header</h3>
-        <p id="description">Content</p>
-    </div><!-- /content -->
+    <!--<div data-role="header">-->
+        <!--<h1>CheckupTracker</h1>-->
+    <!--</div>&lt;!&ndash; /header &ndash;&gt;-->
 
-    <div data-role="footer">
-        <h4>Footer</h4>
-    </div><!-- /footer -->
+    <!--<div data-role="content">-->
+        <!--<h3>Header</h3>-->
+        <!--<p id="description">Content</p>-->
+    <!--</div>&lt;!&ndash; /content &ndash;&gt;-->
 
-</div><!-- /page -->
+    <!--<div data-role="footer">-->
+        <!--<h4>Footer</h4>-->
+    <!--</div>&lt;!&ndash; /footer &ndash;&gt;-->
+
+<!--</div>&lt;!&ndash; /page &ndash;&gt;-->
 
 
 </body>
