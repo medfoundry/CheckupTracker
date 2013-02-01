@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
     <title>My Page</title>
@@ -10,31 +9,9 @@
 
     <script type="text/javascript">
 
-        $(document).bind('pagebeforecreate', function () {
-            //get the active child and checkup from localStorage //TODO: Consider session storage.
-            var activeChild = window.localStorage.getItem("activeChildName");
-            var activeCheckup = window.localStorage.getItem("activeCheckupName");
-
-
-            //list the kid's name and checkup
-            //TODO: Wire this one in ...  $(".whichVisitHeader").html(activeCheckup);
-
-            $(".child_name_display").html(activeChild).trigger( "create" );
-        });
 
     </script>
     <script type="text/javascript" >
-
-        function populateVaccines(vaccines) {
-            var htmlOutput = "";
-            vaccines = vaccines.vaccines;
-
-            for (i=0; i<vaccines.length; i++) {
-                htmlOutput += "<option>" + vaccines[i].trade_name + "</option>";
-            }
-            alert(htmlOutput);
-            $("#vaccine_list").html(htmlOutput).trigger( "create" );
-        };
 
 
         //save the checkup data to localstorage
@@ -86,6 +63,21 @@
 
 
 <div data-role="page" data-theme="b" id="visit" data-add-back-btn="true">
+
+    <script>
+        $(document).bind('pagebeforecreate', function () {
+            //get the active child and checkup from localStorage //TODO: Consider session storage.
+            var activeChild = window.localStorage.getItem("activeChildName");
+            var activeCheckup = window.localStorage.getItem("activeCheckupName");
+
+
+            //list the kid's name and checkup
+            //TODO: Wire this one in ...  $(".whichVisitHeader").html(activeCheckup);
+
+            $(".child_name_display").html(activeChild).trigger( "create" );
+        });
+
+    </script>
     <div data-role="header">
         <a href="index.html" data-icon="delete">Cancel</a>
         <h1>Record a Check Up</h1>

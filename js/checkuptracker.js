@@ -34,4 +34,14 @@ function listChildren() {
 }
 
 
+function populateVaccines(vaccines) {
+    var htmlOutput = "";
+    vaccines = vaccines.vaccines;
+
+    for (var i=0; i<vaccines.length; i++) {
+        htmlOutput += "<option>" + vaccines[i].trade_name + "</option>";
+    }
+    $("#vaccine_list").html(htmlOutput).trigger( "create" );
+};
+
 

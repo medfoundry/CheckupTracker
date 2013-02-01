@@ -39,7 +39,7 @@
 <div data-role="page" data-theme="b" data-add-back-btn="true" id="prep">
 
     <script type="text/javascript">
-        $('#prep').bind('pagebeforecreate', function () {
+        $('#prep').live('pagebeforecreate', function () {
 
             var activeChild = window.localStorage.getItem("activeChildName");
             //list the kid's name
