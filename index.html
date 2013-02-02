@@ -54,10 +54,11 @@
         $(document).live('pageinit', function () {
             //build the list of children from localStore; re-initialize the page
             var output = "";
-            output += '<ul data-role="listview" data-inset="true" data-split-icon="gear" rel="external" data-split-theme="d" data-mini="true">';
+            output += '<ul data-role="listview" data-inset="true" data-split-icon="gear" rel="external" data-theme="b"  data-split-theme="d" data-mini="true">';
             for (var i= 0; i<childrenObject.children.length; i++) {
-                output += "<li><a href='javascript:setActiveChild(\""  + childrenObject.children[i].child.child_name + "\",\"checkup_list.html\");'><img src='img/CheckUpTracker_32.png' />";
-                output += "<h3>" + childrenObject.children[i].child.child_name + "</h3></a>";
+                output += "<li><a href='javascript:setActiveChild(\""  + childrenObject.children[i].child.child_name + "\",\"checkup_list.html\");'><!-- <img src='img/CheckUpTracker_32.png' /> -->";
+                output += "<h3>" + childrenObject.children[i].child.child_name + "</h3>";
+                output += "<p>Last Checkup ... 4/15/12 <br/> Next Checkup (expected) ... 4/15/14</p></a>";
                 output += '<a href="#add_child?child="' + childrenObject.children[i].child.child_name + '" data-rel="dialog" data-transition="slideup">Edit Child Information</a></li>';
             }
             output += "</ul>";
@@ -115,20 +116,29 @@
     </div><!-- /header -->
 
     <div data-role="content">
-        <h3>Like a GPS for Well-Child Checkups</h3>
+        <!--<h3>Like a GPS for Well-Child Checkups</h3>-->
         <h4 style="color:#666">Use Checkup Tracker to manage your child's checkups from birth through teen-age years.</h4>
         <div id="children_here">Children Here</div>
 
         <div data-role="container">
-            <a href="#add_child" data-role="button" data-rel="dialog" data-icon="star" data-inline="true">Add Child</a>
+            <a href="#add_child" data-role="button"  data-theme="b" data-rel="dialog" data-icon="star" data-inline="true">Add Child</a>
         </div>
 
-
+        <div data-role="footer" data-theme="a" data-position="fixed" >
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Field Trip</a></li>
+                    <li><a href="#shots_record">Shots</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
     </div><!-- /content -->
 
 </div><!-- /page -->
 
-<div data-role="page" data-theme="b" id="add_child" data-add-back-btn="true">
+<div data-role="page" data-theme="a" id="add_child" data-add-back-btn="true">
     <div data-role="header">
         <h1>Add a Child</h1>
     </div><!-- /header -->
@@ -155,7 +165,7 @@
 
     </div>
 
-    <a id="savebtn" data-role="button" data-mini="false" data-inline="true">Save</a>
+    <a id="savebtn" data-role="button" data-mini="true" data-inline="true">Save</a>
 
 
 
@@ -164,6 +174,64 @@
 
 
 </div> <!-- /page -->
+
+<!-- VACCINATION -->
+<div data-role="page" data-theme="b" id="shots_record">
+
+    <div data-role="header">
+        <h1>CheckupTracker</h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <h4 style="color:#666">Record of Immunizations (Shots)
+
+            <!--<label for="kid_shots" class="select" >Who?</label>-->
+            <select name="kid_shots" id="kid_shots" data-mini="true" data-inline="true">
+                <option value="none">Mark</option>
+                <option value="dr1">John</option>
+                <option value="dr2">Katy</option>
+                <option value="dr3">David</option>
+            </select></h4>
+            <a href="#" data-mini="true" data-role="button" data-inline="true" >Copy Record</a><br clear="all"/>
+        <h4>Immunization Record for Mark</h4>
+
+            <table style="font-size:small"><thead style="font-weight:bold"><tr></tr><td>Vaccine</td><td>Dose</td><td>Date</td></tr></thead>
+            <tr><td colspan=3><b>Hepatitis B (Hep B)</b></td></tr>
+                <tr><td>Hep B</td><td>1</td><td>12/14/2005</td></tr>
+                <tr><td>Hep B</td><td>2</td><td>12/14/2006</td></tr>
+                <tr><td>Hep B</td><td>3</td><td>12/14/2007</td></tr>
+            <tr><td colspan=3><b>Rotavirus (RV1, RV5)</b></td></tr>
+                <tr><td>RV1</td><td>1</td><td>12/14/2005</td></tr>
+                <tr><td></td><td>2</td><td></td></tr>
+                <tr><td></td><td>3</td><td></td></tr>
+            <tr><td colspan=3><b>Diphtheria, Tetanus, Pertusis (DTaP, DTP, DT)</b></td></tr>
+                <tr><td>DTap</td><td>1</td><td>12/14/2005</td></tr>
+                <tr><td>DTap</td><td>2</td><td>12/14/2006</td></tr>
+                <tr><td>DTap</td><td>3</td><td>12/14/2007</td></tr>
+            </table>
+
+
+        <div data-role="footer" data-theme="a" data-position="fixed" >
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#main">Home</a></li>
+                    <li><a href="#">Field Trip</a></li>
+                    <li><a href="#">Shots</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div><!-- /navbar -->
+        </div><!-- /footer -->
+            </table>
+        </div>
+
+
+    </div><!-- /content -->
+
+</div><!-- /page -->
+
+
+
+
 
 </body>
 </html>
