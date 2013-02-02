@@ -103,13 +103,13 @@
             <div class="ui-block-a">
                 <div data-role='fieldcontain'>
                     <label for="checkup_date">Date:</label>
-                    <input type="date" name="checkup_date" id="checkup_date" class="sessionstore" value="12/12/2012">
+                    <input type="date" name="checkup_date" id="checkup_date" class="sessionstore" value="2013-04-06">
                 </div>
             </div>
             <div class="ui-block-b">
                 <div data-role='fieldcontain'>
                     <label for="checkup_date">Time:</label>
-                    <input type="time" name="checkup_time" id="checkup_time" class="sessionstore" value="10:15AM">
+                    <input type="time" name="checkup_time" id="checkup_time" class="sessionstore" value="10:45:00">
                 </div>
             </div>
         </div><!-- /grid-a -->
@@ -215,6 +215,17 @@
         <div data-role='fieldcontain'>
             <div class="ui-grid-a">
                 <div class="ui-block-a">
+                    <label for="height_percent">Height (percentile)</label>
+                </div>
+                <div class="ui-block-b">
+                    <input type="number" pattern="[0-9]*" name="height_percent" id="height_percent" class="sessionstore" >
+                </div>
+            </div>
+        </div>
+
+        <div data-role='fieldcontain'>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
                     <label for="weight">Weight (pounds or kg)</label>
                 </div>
                 <div class="ui-block-b">
@@ -223,6 +234,16 @@
             </div>
         </div>
 
+        <div data-role='fieldcontain'>
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <label for="weight_percent">Weight (pounds or kg)</label>
+                </div>
+                <div class="ui-block-b">
+                    <input type="number" pattern="[0-9]*" name="weight_percent" id="weight_percent" class="sessionstore" >
+                </div>
+            </div>
+        </div>
 
 
         <div data-role='fieldcontain'>

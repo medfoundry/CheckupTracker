@@ -14,7 +14,8 @@ function setActiveChild(child,destURL) {
     activeChild = child;
     window.localStorage.setItem("activeChildName", activeChild);
     //continue to destination URL
-    $.mobile.changePage(destURL);
+    document.location.href = destURL;
+    //$.mobile.changePage(destURL);
 }
 
 function listChildren() {
